@@ -251,14 +251,6 @@ func statistik(A tabBaju, N int) {
 	}
 }
 
-func cekDataKosong(N int) bool {
-	if N == 0 {
-		fmt.Println("Belum ada data. Silakan input data terlebih dahulu.")
-		return true
-	}
-	return false
-}
-
 func main() {
 	var A tabBaju
 	var N int = 0
@@ -281,67 +273,72 @@ func main() {
 		fmt.Print("Pilihan: ")
 		fmt.Scan(&pilihan)
 
-		if pilihan == "0" {
+		switch pilihan {
+		case "0":
 			fmt.Println("Terima kasih!")
 			selesai = true
-		} else if pilihan == "1" {
+		case "1":
 			readData(&A, &N)
-		} else if !cekDataKosong(N) {
+		case "2", "3", "4", "5", "6", "7", "8", "9":
+			if N == 0 {
+				fmt.Println("Belum ada data. Silakan input data terlebih dahulu.")
+			} else {
+				switch pilihan {
+				case "2":
+					printData(A, N)
+				case "3":
+					var nama string
+					fmt.Print("Nama baju yang ingin diubah: ")
+					fmt.Scan(&nama)
+					ubahData(&A, N, nama)
+				case "4":
+					var nama string
+					fmt.Print("Nama baju yang ingin dihapus: ")
+					fmt.Scan(&nama)
+					hapusData(&A, &N, nama)
+				case "5":
+					sortedA = A
+					fmt.Println("1. Sort Harga Ascending")
+					fmt.Println("2. Sort Harga Descending")
+					fmt.Print("Pilihan: ")
+					fmt.Scan(&psort)
 
-			switch pilihan {
-			case "2":
-				printData(A, N)
-			case "3":
-				var nama string
-				fmt.Print("Nama baju yang ingin diubah: ")
-				fmt.Scan(&nama)
-				ubahData(&A, N, nama)
-			case "4":
-				var nama string
-				fmt.Print("Nama baju yang ingin dihapus: ")
-				fmt.Scan(&nama)
-				hapusData(&A, &N, nama)
-			case "5":
-				sortedA = A
-				fmt.Println("1. Sort Harga Ascending")
-				fmt.Println("2. Sort Harga Descending")
-				fmt.Print("Pilihan: ")
-				fmt.Scan(&psort)
+					switch psort {
+					case "1":
+						insertionSortHargaAscending(&sortedA, N)
+						fmt.Println("-- Hasil Sort Harga Secara Ascending --")
+						printData(sortedA, N)
+					case "2":
+						insertionSortHargaDescending(&sortedA, N)
+						fmt.Println("-- Hasil Sort Harga Secara Descending --")
+						printData(sortedA, N)
+					default:
+						fmt.Println("Pilihan Tidak Valid")
+					}
 
-				if psort == "1" {
-					insertionSortHargaAscending(&sortedA, N)
-					fmt.Println("-- Hasil Sort Harga Secara Ascending --")
+				case "6":
+					sortedA = A
+					selectionSortStok(&sortedA, N)
+					fmt.Println("-- Hasil Sort Stok --")
 					printData(sortedA, N)
-				} else if psort == "2" {
-					insertionSortHargaDescending(&sortedA, N)
-					fmt.Println("-- Hasil Sort Harga Secara Descending --")
-					printData(sortedA, N)
-				} else {
-					fmt.Println("Pilihan Tidak Valid")
+				case "7":
+					var ukuran string
+					fmt.Print("Cari ukuran: ")
+					fmt.Scan(&ukuran)
+					sequentialSearchUkuran(A, N, ukuran)
+				case "8":
+					var warna string
+					sortedA = A
+					insertionSortWarna(&sortedA, N)
+					fmt.Print("Cari warna: ")
+					fmt.Scan(&warna)
+					binarySearchWarna(sortedA, N, warna)
+				case "9":
+					statistik(A, N)
 				}
-
-			case "6":
-				sortedA = A
-				selectionSortStok(&sortedA, N)
-				fmt.Println("-- Hasil Sort Stok --")
-				printData(sortedA, N)
-			case "7":
-				var ukuran string
-				fmt.Print("Cari ukuran: ")
-				fmt.Scan(&ukuran)
-				sequentialSearchUkuran(A, N, ukuran)
-			case "8":
-				var warna string
-				sortedA = A
-				insertionSortWarna(&sortedA, N)
-				fmt.Print("Cari warna: ")
-				fmt.Scan(&warna)
-				binarySearchWarna(sortedA, N, warna)
-			case "9":
-				statistik(A, N)
-			default:
-				fmt.Println("Pilihan tidak valid.")
 			}
+		default:
+			fmt.Println("Pilihan tidak valid.")
 		}
 	}
 }
