@@ -74,13 +74,27 @@ func hapusData(A *tabBaju, N *int, x string) {
 	}
 }
 
-func insertionSortHarga(A *tabBaju, N int) {
+func insertionSortHargaAscending(A *tabBaju, N int) {
 	var i, pass int
 	var temp baju
 	for pass = 1; pass < N; pass++ {
 		temp = A[pass]
 		i = pass
 		for i > 0 && temp.harga < A[i-1].harga {
+			A[i] = A[i-1]
+			i--
+		}
+		A[i] = temp
+	}
+}
+
+func insertionSortHargaDescending(A *tabBaju, N int) {
+	var i, pass int
+	var temp baju
+	for pass = 1; pass < N; pass++ {
+		temp = A[pass]
+		i = pass
+		for i > 0 && temp.harga > A[i-1].harga {
 			A[i] = A[i-1]
 			i--
 		}
@@ -248,7 +262,7 @@ func cekDataKosong(N int) bool {
 func main() {
 	var A tabBaju
 	var N int = 0
-	var pilihan string
+	var pilihan, psort string
 	var sortedA tabBaju
 	var selesai bool = false
 
@@ -258,7 +272,7 @@ func main() {
 		fmt.Println("2. Tampil Semua Data")
 		fmt.Println("3. Ubah Data by Nama")
 		fmt.Println("4. Hapus Data by Nama")
-		fmt.Println("5. Insertion Sort Harga Ascending")
+		fmt.Println("5. Insertion Sort Harga")
 		fmt.Println("6. Selection Sort Stok Ascending")
 		fmt.Println("7. Sequential Search by Ukuran")
 		fmt.Println("8. Binary Search by Warna")
@@ -289,9 +303,23 @@ func main() {
 				hapusData(&A, &N, nama)
 			case "5":
 				sortedA = A
-				insertionSortHarga(&sortedA, N)
-				fmt.Println("-- Hasil Sort Harga --")
-				printData(sortedA, N)
+				fmt.Println("1. Sort Harga Ascending")
+				fmt.Println("2. Sort Harga Descending")
+				fmt.Print("Pilihan: ")
+				fmt.Scan(&psort)
+
+				if psort == "1" {
+					insertionSortHargaAscending(&sortedA, N)
+					fmt.Println("-- Hasil Sort Harga Secara Ascending --")
+					printData(sortedA, N)
+				} else if psort == "2" {
+					insertionSortHargaDescending(&sortedA, N)
+					fmt.Println("-- Hasil Sort Harga Secara Descending --")
+					printData(sortedA, N)
+				} else {
+					fmt.Println("Pilihan Tidak Valid")
+				}
+
 			case "6":
 				sortedA = A
 				selectionSortStok(&sortedA, N)
