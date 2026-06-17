@@ -116,13 +116,29 @@ func insertionSortWarna(A *tabBaju, N int) {
 	}
 }
 
-func selectionSortStok(A *tabBaju, N int) {
+func selectionSortStokAscending(A *tabBaju, N int) {
 	var i, j, minIdx int
 	var temp baju
 	for i = 0; i < N-1; i++ {
 		minIdx = i
 		for j = i + 1; j < N; j++ {
 			if A[j].stok < A[minIdx].stok {
+				minIdx = j
+			}
+		}
+		temp = A[i]
+		A[i] = A[minIdx]
+		A[minIdx] = temp
+	}
+}
+
+func selectionSortStokDescending(A *tabBaju, N int) {
+	var i, j, minIdx int
+	var temp baju
+	for i = 0; i < N-1; i++ {
+		minIdx = i
+		for j = i + 1; j < N; j++ {
+			if A[j].stok > A[minIdx].stok {
 				minIdx = j
 			}
 		}
@@ -261,11 +277,11 @@ func main() {
 	for !selesai {
 		fmt.Println("\n===== SIFASHION =====")
 		fmt.Println("1. Input Data Baju")
-		fmt.Println("2. Tampil Semua Data")
+		fmt.Println("2. Tampilkan Semua Data")
 		fmt.Println("3. Ubah Data by Nama")
 		fmt.Println("4. Hapus Data by Nama")
 		fmt.Println("5. Insertion Sort Harga")
-		fmt.Println("6. Selection Sort Stok Ascending")
+		fmt.Println("6. Selection Sort Stok")
 		fmt.Println("7. Sequential Search by Ukuran")
 		fmt.Println("8. Binary Search by Warna")
 		fmt.Println("9. Statistik")
@@ -318,9 +334,23 @@ func main() {
 
 				case "6":
 					sortedA = A
-					selectionSortStok(&sortedA, N)
-					fmt.Println("-- Hasil Sort Stok --")
-					printData(sortedA, N)
+					fmt.Println("1. Sort Stok Ascending")
+					fmt.Println("2. Sort Stok Descending")
+					fmt.Print("Pilihan: ")
+					fmt.Scan(&psort)
+
+					switch psort {
+					case "1":
+						selectionSortStokAscending(&sortedA, N)
+						fmt.Println("-- Hasil Sort Stok Secara Ascending --")
+						printData(sortedA, N)
+					case "2":
+						selectionSortStokDescending(&sortedA, N)
+						fmt.Println("-- Hasil Sort Stok Secara Descending --")
+						printData(sortedA, N)
+					default:
+						fmt.Println("Pilihan Tidak Valid")
+					}
 				case "7":
 					var ukuran string
 					fmt.Print("Cari ukuran: ")
