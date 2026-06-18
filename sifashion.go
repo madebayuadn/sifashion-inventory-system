@@ -121,34 +121,34 @@ func insertionSortWarna(A *tabBaju, N int) {
 }
 
 func selectionSortStokAscending(A *tabBaju, N int) {
-	var i, j, minIdx int
+	var i, pass, idx int
 	var temp baju
-	for i = 0; i < N-1; i++ {
-		minIdx = i
-		for j = i + 1; j < N; j++ {
-			if A[j].stok < A[minIdx].stok {
-				minIdx = j
+	for pass = 1; pass < N; pass++ {
+		idx = pass - 1
+		for i = pass; i < N; i++ {
+			if A[i].stok < A[idx].stok {
+				idx = i
 			}
 		}
-		temp = A[i]
-		A[i] = A[minIdx]
-		A[minIdx] = temp
+		temp = A[pass-1]
+		A[pass-1] = A[idx]
+		A[idx] = temp
 	}
 }
 
 func selectionSortStokDescending(A *tabBaju, N int) {
-	var i, j, minIdx int
+	var i, pass, idx int
 	var temp baju
-	for i = 0; i < N-1; i++ {
-		minIdx = i
-		for j = i + 1; j < N; j++ {
-			if A[j].stok > A[minIdx].stok {
-				minIdx = j
+	for pass = 1; pass < N; pass++ {
+		idx = pass - 1
+		for i = pass; i < N; i++ {
+			if A[i].stok > A[idx].stok {
+				idx = i
 			}
 		}
-		temp = A[i]
-		A[i] = A[minIdx]
-		A[minIdx] = temp
+		temp = A[pass-1]
+		A[pass-1] = A[idx]
+		A[idx] = temp
 	}
 }
 
@@ -182,13 +182,16 @@ func binarySearchWarna(A tabBaju, N int, x string) {
 			left = mid + 1
 		} else {
 			start = mid
+			end = mid
+
 			for start > 0 && A[start-1].warna == x {
 				start--
 			}
-			end = mid
+
 			for end < N-1 && A[end+1].warna == x {
 				end++
 			}
+
 			for i = start; i <= end; i++ {
 				fmt.Printf("%-8s %-16s %-8s %-10s %-6d %-10.2f\n",
 					A[i].kode, A[i].nama, A[i].ukuran, A[i].warna, A[i].stok, A[i].harga)
@@ -204,6 +207,8 @@ func binarySearchWarna(A tabBaju, N int, x string) {
 func statistik(A tabBaju, N int) {
 	var i, totalStok, iMaks, iMin, j, total int
 	var duplikat bool
+	iMaks = 0
+	iMin = 0
 
 	for i = 0; i < N; i++ {
 		totalStok += A[i].stok
