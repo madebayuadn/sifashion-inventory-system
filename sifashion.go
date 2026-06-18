@@ -57,19 +57,23 @@ func ubahData(A *tabBaju, N int, x string) {
 func hapusData(A *tabBaju, N *int, x string) {
 	var i, j int
 	var found bool = false
+	var konfirm string
 	for i = 0; i < *N; i++ {
 		if A[i].nama == x {
-			for j = i; j < *N-1; j++ {
-				A[j] = A[j+1]
+			fmt.Printf("Ditemukan: %s %s %s %s - hapus? (y/n): ", A[i].kode, A[i].nama, A[i].ukuran, A[i].warna)
+			fmt.Scan(&konfirm)
+			if konfirm == "y" {
+				for j = i; j < *N-1; j++ {
+					A[j] = A[j+1]
+				}
+				fmt.Println("Data berhasil dihapus.")
+				*N--
+				found = true
+				i--
 			}
-			*N--
-			found = true
-			i--
 		}
 	}
-	if found {
-		fmt.Println("Data dengan nama", x, "berhasil dihapus.")
-	} else {
+	if !found {
 		fmt.Println("Baju dengan nama", x, "tidak ditemukan.")
 	}
 }
