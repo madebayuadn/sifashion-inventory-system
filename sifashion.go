@@ -42,9 +42,9 @@ func ubahData(A *tabBaju, N int, x string) {
 			fmt.Printf("Ditemukan: %s %s %s - ubah? (y/n): ", A[i].kode, A[i].ukuran, A[i].warna)
 			fmt.Scan(&konfirm)
 			if konfirm == "y" {
-				fmt.Print("Kode Nama Ukuran Warna Stok Harga (Baru): ")
-				fmt.Scan(&A[i].kode, &A[i].nama, &A[i].ukuran, &A[i].warna, &A[i].stok, &A[i].harga)
-				fmt.Println("Data berhasil diubah.")
+				fmt.Print("Stok Baru: ")
+				fmt.Scan(&A[i].stok)
+				fmt.Println("Stok berhasil diubah.")
 			}
 			found = true
 		}
@@ -278,7 +278,7 @@ func main() {
 		fmt.Println("\n===== SIFASHION =====")
 		fmt.Println("1. Input Data Baju")
 		fmt.Println("2. Tampilkan Semua Data")
-		fmt.Println("3. Ubah Data by Nama")
+		fmt.Println("3. Ubah Data Stok by Nama")
 		fmt.Println("4. Hapus Data by Nama")
 		fmt.Println("5. Insertion Sort Harga")
 		fmt.Println("6. Selection Sort Stok")
